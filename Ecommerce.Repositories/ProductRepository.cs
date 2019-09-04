@@ -14,6 +14,7 @@ namespace Ecommerce.Repositories
         {
             _db = new EcommerceDbContext();
         }
+
         public bool Add(Product product)
         {
             _db.Products.Add(product);
@@ -29,7 +30,9 @@ namespace Ecommerce.Repositories
 
         public ICollection<Product> GetAll()
         {
-           return _db.Products.ToList();
+            return _db.Products
+                .Include(c => c.Category)
+                .ToList();
         }
 
         public Product GetById(int id)

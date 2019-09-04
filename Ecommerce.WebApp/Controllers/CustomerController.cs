@@ -24,7 +24,7 @@ namespace Ecommerce.WebApp.Controllers
             var searchCustomer = from customer in customers select customer;
             if (!String.IsNullOrEmpty(search))
             {
-                searchCustomer = searchCustomer.Where(c => c.Name.Contains(search));
+                searchCustomer = searchCustomer.Where(c => c.Name.StartsWith(search));
                 return View(searchCustomer);
             }
             return View(customers);

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Ecommerce.Models.Product>
+<h1>Product List</h1>
+<div class="jumbotron-fluid">
+    <table class="table table-responsive-sm table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Expire Date</th>
+                <th>Category Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.ExpireDate</td>
+                    <td>@product.Category.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
