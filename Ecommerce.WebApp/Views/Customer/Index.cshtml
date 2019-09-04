@@ -1,4 +1,5 @@
-﻿@model List<Ecommerce.Models.Customer>
+﻿@model IEnumerable<Ecommerce.Models.Customer>
+
 <html>
 <head>
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
@@ -12,18 +13,27 @@
                 @ViewBag.SuccessMessage
             </div>
         }
-
         <h1>Customer List</h1>
         <div class="row ml-3 mb-1">
             <a asp-controller="Customer" asp-action="Create" class="btn btn-outline-primary py-1">Create</a>
         </div>
-        <div class="container-fluid">
-            <table class="table table-bordered table-striped table-hover table-responsive-lg">
-                <thead class="text-center">
+        <form asp-action="Index" method="get">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text py-1">Find by name</span>
+                </div>
+                 <input type="search" name="search" value="@ViewData["searchData"]"/>
+                 <a asp-action="Index" class="font-weight-bold">Back to List</a>
+            </div>
+        </form>
+        <div class="jumbotron-fluid">
+            <table class="table table-bordered table-striped table-hover mt-2 table-responsive-lg table-sm">
+                <thead class="text-center bg-transparent">
                     <tr>
                         <th>Name</th>
                         <th>Address</th>
                         <th>Loyalty Point</th>
+                        <th>Control Button</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,8 +45,8 @@
                             <td>@customer.Address</td>
                             <td>@customer.LoyaltyPoint</td>
                             <td>
-                                <a href="" class="btn btn-info btn-sm"><i class="fas fa-edit"></i>Edit</a>
-                                <a href="" class="btn btn-danger btn-sm"><i class="fas fa-recycle"></i>Delete</a>
+                                <a asp-action="Edit" asp-route-id="@customer.Id" class="btn btn-info btn-sm"><i class="fas fa-edit"></i>Edit</a>
+                                <a asp-action="Delete" asp-route-id="@customer.Id" class="btn btn-danger btn-sm"><i class="fas fa-recycle"></i>Delete</a>
                             </td>
                         </tr>
                     }

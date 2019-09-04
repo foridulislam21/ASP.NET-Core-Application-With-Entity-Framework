@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Ecommerce.DatabaseContext;
 using Ecommerce.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Repositories
 {
@@ -22,9 +23,27 @@ namespace Ecommerce.Repositories
             return _db.SaveChanges() > 0;
         }
 
+        public Customer GetById(int? id)
+        {
+            return _db.Customers.Find(id);
+        }
+
         public List<Customer> GetAll()
         {
-            return _db.Customers.ToList();
+            return _db.Customers
+                .ToList();
+        }
+
+        public bool Update(Customer customer)
+        {
+            _db.Entry(customer).State = EntityState.Modified;
+            return _db.SaveChanges() > 0;
+        }
+
+        public bool Remove(Customer customer)
+        {
+            _db.Entry(customer).State = EntityState.Deleted;
+            return _db.SaveChanges() > 0;
         }
     }
 }
