@@ -1,5 +1,7 @@
 ﻿@model Ecommerce.Models.Customer
-
+@{
+    Layout = "_Layout";
+}
 <h1>Customer Information</h1>
 <form asp-action="Delete">
     <div class="container-fluid">
@@ -46,7 +48,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" data-dismiss="modal"/>
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" data-dismiss="modal" />
                     </div>
                 </div>
             </div>

@@ -1,13 +1,15 @@
 ﻿@model Ecommerce.Models.Customer
-
+@{
+    Layout = "_Layout";
+}
 <div class="container-fluid">
-    @if (ViewBag.SuccessMessage != null)
+    @if (ViewBag.UpdateMessage != null)
     {
-        <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+        <div class="alert alert-info">
+            @ViewBag.UpdateMessage
+        </div>
     }
-
     <form asp-action="Edit">
-
         <div class="form-group">
             <label asp-for="Name" class="control-label"></label>
             <input asp-for="Name" class="form-control" />

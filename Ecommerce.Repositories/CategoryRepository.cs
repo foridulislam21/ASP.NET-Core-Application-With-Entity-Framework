@@ -14,13 +14,13 @@ namespace Ecommerce.Repositories
         {
             db = new EcommerceDbContext();
         }
+
         public bool Add(Category category)
         {
             db.Categories.Add(category);
 
             return db.SaveChanges() > 0;
         }
-
 
         public bool Update(Category category)
         {
@@ -31,7 +31,9 @@ namespace Ecommerce.Repositories
 
         public ICollection<Category> GetAll()
         {
-            return db.Categories.ToList();
+            return db.Categories
+                .Include(c => c.Products)
+                .ToList();
         }
 
         public Category GetById(int id)
@@ -42,11 +44,10 @@ namespace Ecommerce.Repositories
         public void LoadProducts(Category category)
         {
             db.Entry(category)
-                .Collection(c=>c.Products)
+                .Collection(c => c.Products)
                 .Query()
-                .Where(c=>c.IsActive)
+                .Where(c => c.IsActive)
                 .Load();
-         
         }
     }
 }

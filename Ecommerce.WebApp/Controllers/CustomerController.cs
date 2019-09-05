@@ -79,7 +79,7 @@ namespace Ecommerce.WebApp.Controllers
                 bool isUpdate = _customerRepository.Update(customer);
                 if (isUpdate)
                 {
-                    ViewBag.SuccessMessage = "Update SuccessFully!";
+                    ViewBag.UpdateMessage = "Update SuccessFully!";
                     return View();
                 }
             }

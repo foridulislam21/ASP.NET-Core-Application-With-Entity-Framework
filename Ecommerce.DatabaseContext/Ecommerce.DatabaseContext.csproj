@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190829080847_Rename_Database_Name.cs" />
     <Compile Remove="Migrations\20190829080847_Rename_Database_Name.Designer.cs" />
+    <Compile Remove="Migrations\20190904205742_AnyChange.cs" />
+    <Compile Remove="Migrations\20190904205742_AnyChange.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
