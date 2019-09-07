@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Ecommerce.Models.Customer>
-
+@{
+    Layout = "_Layout";
+}
 <div class="container">
     @if (ViewBag.SuccessMessage != null)
     {
@@ -9,7 +11,7 @@
     }
     <h1>Customer List</h1>
     <div class="row ml-3 mb-1">
-        <a asp-controller="Customer" asp-action="Create" class="btn btn-outline-primary py-1" data-toggle="modal" data-target="#Added">Create</a>
+        <a asp-controller="Customer" asp-action="Create" class="btn btn-outline-primary py-1">Create</a>
     </div>
     <form asp-action="Index" method="get">
         <div class="input-group">

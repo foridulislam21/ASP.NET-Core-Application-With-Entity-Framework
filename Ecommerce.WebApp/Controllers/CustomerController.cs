@@ -21,10 +21,10 @@ namespace Ecommerce.WebApp.Controllers
         {
             var customers = _customerRepository.GetAll();
             ViewData["searchData"] = search;
-            var searchCustomer = from customer in customers select customer;
+
             if (!String.IsNullOrEmpty(search))
             {
-                searchCustomer = searchCustomer.Where(c => c.Name.StartsWith(search));
+                var searchCustomer = _customerRepository.GetByName(search);
                 return View(searchCustomer);
             }
             return View(customers);

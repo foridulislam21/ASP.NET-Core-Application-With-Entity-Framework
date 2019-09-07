@@ -14,12 +14,12 @@ namespace Ecommerce.WebApp.Controllers
     public class ProductController : Controller
     {
         private ProductRepository _productRepository;
-        private EcommerceDbContext _categoryRepository;
+        private CategoryRepository _categoryRepository;
 
         public ProductController()
         {
             _productRepository = new ProductRepository();
-            _categoryRepository = new EcommerceDbContext();
+            _categoryRepository = new CategoryRepository();
         }
 
         public IActionResult Index()
@@ -36,7 +36,7 @@ namespace Ecommerce.WebApp.Controllers
 
         private void PopulateCategoryList(object selectedCategory = null)
         {
-            var categor = from category in _categoryRepository.Categories select category;
+            var categor = _categoryRepository.GetAll();
             ViewBag.CategoryID = new SelectList(categor, "Id", "Name", selectedCategory);
         }
 

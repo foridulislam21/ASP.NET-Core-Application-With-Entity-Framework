@@ -49,5 +49,10 @@ namespace Ecommerce.Repositories
                 .Where(c => c.IsActive)
                 .Load();
         }
+
+        public IQueryable<Category> GetbyName(string name)
+        {
+            return db.Categories.Where(c => c.Name.StartsWith(name));
+        }
     }
 }

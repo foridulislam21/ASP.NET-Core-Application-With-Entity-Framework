@@ -45,5 +45,10 @@ namespace Ecommerce.Repositories
             _db.Entry(customer).State = EntityState.Deleted;
             return _db.SaveChanges() > 0;
         }
+
+        public IEnumerable<Customer> GetByName(string name)
+        {
+            return _db.Customers.Where(c => c.Name.StartsWith(name));
+        }
     }
 }
