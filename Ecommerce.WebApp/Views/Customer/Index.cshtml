@@ -11,7 +11,21 @@
     }
     <h1>Customer List</h1>
     <div class="row ml-3 mb-1">
-        <a asp-controller="Customer" asp-action="Create" class="btn btn-outline-primary py-1">Create</a>
+        <button type="button" id="createButton" class="btn btn-outline-primary py-1" data-toggle="modal" data-target="#createModal">Create</button>
+    </div>
+    <div class="modal fade" id="createModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Enter Customer Information</h4>
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" id="contentModal">
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
     </div>
     <form asp-action="Index" method="get">
         <div class="input-group">
@@ -22,32 +36,32 @@
             <a asp-action="Index" class="font-weight-bold btn btn-outline-info">Back to List</a>
         </div>
     </form>
-    <div class="jumbotron-fluid">
+    <div class="jumbotron-fluid" id="listArea">
         <table class="table table-bordered table-striped table-hover mt-2 table-responsive-lg table-sm">
             <thead class="text-center bg-transparent">
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Loyalty Point</th>
-                <th>Control Button</th>
-            </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Loyalty Point</th>
+                    <th>Control Button</th>
+                </tr>
             </thead>
             <tbody>
 
-            @foreach (var customer in Model)
-            {
-                <tr>
-                    <td>@customer.Name</td>
-                    <td>@customer.Address</td>
-                    <td>@customer.LoyaltyPoint</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@customer.Id" class="btn btn-info btn-sm"><i class="fas fa-edit"></i>Edit</a>
-                        <a asp-action="Delete" asp-route-id="@customer.Id" class="btn btn-danger btn-sm"><i class="fas fa-recycle"></i>Delete</a>
-                    </td>
-                </tr>
-            }
+                @foreach (var customer in Model)
+                {
+                    <tr>
+                        <td>@customer.Name</td>
+                        <td>@customer.Address</td>
+                        <td>@customer.LoyaltyPoint</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@customer.Id" class="btn btn-info btn-sm"><i class="fas fa-edit"></i>Edit</a>
+                            <a asp-route-id="@customer.Id" class="btn btn-danger btn-sm"><i class="fas fa-recycle"></i>Delete</a>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
+    <script src="JS/App.js"></script>
 </div>
-

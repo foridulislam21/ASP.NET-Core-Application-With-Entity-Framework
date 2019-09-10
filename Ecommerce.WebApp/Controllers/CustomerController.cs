@@ -30,9 +30,10 @@ namespace Ecommerce.WebApp.Controllers
             return View(customers);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
