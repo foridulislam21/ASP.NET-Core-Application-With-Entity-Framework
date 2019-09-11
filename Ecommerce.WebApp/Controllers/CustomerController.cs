@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Ecommerce.Models;
 using Ecommerce.Repositories;
+using Ecommerce.WebApp.Models.Customer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.WebApp.Controllers
@@ -22,35 +23,48 @@ namespace Ecommerce.WebApp.Controllers
             var customers = _customerRepository.GetAll();
             ViewData["searchData"] = search;
 
-            if (!String.IsNullOrEmpty(search))
+            if (!string.IsNullOrEmpty(search))
             {
                 var searchCustomer = _customerRepository.GetByName(search);
                 return View(searchCustomer);
             }
-            return View(customers);
+            return PartialView(customers);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            return PartialView();
+            var model = new CustomerCreateViewModel
+            {
+                CustomerList = _customerRepository.GetAll()
+            };
+            return PartialView(model);
         }
 
         [HttpPost]
-        public IActionResult Create(Customer model)
+        public IActionResult Create(CustomerCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
-                bool isAdded = _customerRepository.Add(model);
+                var customer = new Customer()
+                {
+                    Name = model.Name,
+                    Address = model.Address,
+                    LoyaltyPoint = model.LoyaltyPoint
+                };
+                bool isAdded = _customerRepository.Add(customer);
                 if (isAdded)
                 {
-                    var customers = _customerRepository.GetAll();
                     ViewBag.SuccessMessage = "Saved Successfully";
-                    return View("Index", customers);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Operation Failed";
                 }
             }
 
-            return View();
+            model.CustomerList = _customerRepository.GetAll();
+            return RedirectToAction("Index", model);
         }
 
         public IActionResult Edit(int? id)

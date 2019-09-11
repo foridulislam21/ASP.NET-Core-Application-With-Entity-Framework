@@ -1,23 +1,36 @@
-﻿//Get Customer Form
-$("#createButton").click(function () {
-    $.ajax({
-        url: "Customer/Create",
-        method: "get"
-    })
-        .done(function (response) {
-            debugger;
-            $("#contentModal").html(response);
-        });
+﻿$(document).ready(function () {
+    //Get Customer Form
+    $("#createButton").click(function () {
+        $.ajax({
+            url: "/Customer/Create",
+            method: "GET"
+        })
+            .done(function (response) {
+                debugger;
+                $("#contentModal").html(response);
+            });
+    });
 });
-
-//Post Customer Form
-//$("#saveButton").click(function () {
-//    $.ajax({
-//        url: "Customer/Create",
-//        method: "post",
-//        data: $("#createForm").serialize()
-//    }).done(function (response) {
-//        debugger;
-//        $("#listArea").html(response);
-//    });
-//});
+//validation using jquery
+function validate() {
+    var isValid = true;
+    if ($("#name").val().trim() === "") {
+        $("#name").css("border-color", "red");
+        isValid = false;
+    } else {
+        $("#name").css("border-color", "lightgray");
+    }
+    if ($("#address").val().trim() === "") {
+        $("#address").css("border-color", "red");
+        isValid = false;
+    } else {
+        $("#address").css("border-color", "lightgray");
+    }
+    if ($("#loyaltyPoints").val().trim() === "") {
+        $("#loyaltyPoints").css("border-color", "red");
+        isValid = false;
+    } else {
+        $("#loyaltyPoints").css("border-color", "lightgray");
+    }
+    return isValid;
+}

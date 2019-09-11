@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Ecommerce.Models.Customer>
+<div>
+
+    <table class="table table-bordered table-striped table-hover mt-2 table-responsive-lg table-sm">
+        <thead class="text-center bg-transparent">
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Loyalty Point</th>
+                <th>Control Button</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@customer.Name</td>
+                    <td>@customer.Address</td>
+                    <td>@customer.LoyaltyPoint</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@customer.Id" class="btn btn-info btn-sm"><i class="fas fa-edit"></i>Edit</a>
+                        <a asp-route-id="@customer.Id" class="btn btn-danger btn-sm"><i class="fas fa-recycle"></i>Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</div>

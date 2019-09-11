@@ -31,6 +31,7 @@ namespace Ecommerce.Repositories
         public List<Customer> GetAll()
         {
             return _db.Customers
+                .OrderBy(c => c.Name)
                 .ToList();
         }
 
