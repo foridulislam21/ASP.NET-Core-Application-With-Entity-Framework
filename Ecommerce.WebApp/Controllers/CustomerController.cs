@@ -122,14 +122,11 @@ namespace Ecommerce.WebApp.Controllers
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
+            bool isRemove = _customerRepository.Remove(customer);
+            if (isRemove)
             {
-                bool isRemove = _customerRepository.Remove(customer);
-                if (isRemove)
-                {
-                    ViewBag.Deleted = "Customer data remove successfully!";
-                    return RedirectToAction("Index");
-                }
+                ViewBag.Deleted = "Customer data remove successfully!";
+                return RedirectToAction("Index");
             }
 
             return RedirectToAction("Index");
