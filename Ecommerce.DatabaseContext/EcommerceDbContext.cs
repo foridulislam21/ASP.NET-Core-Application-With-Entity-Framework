@@ -22,6 +22,10 @@ namespace Ecommerce.DatabaseContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProductFluentConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryFluentConfiguration());
+            modelBuilder.ApplyConfiguration(new CustomerFluentConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderFluentConfiguration());
+
             modelBuilder.Entity<ProductOrder>().HasKey(c => new { c.ProductId, c.OrderId });
 
             modelBuilder.Entity<ProductOrder>()
