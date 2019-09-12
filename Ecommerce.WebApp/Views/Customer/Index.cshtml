@@ -2,21 +2,27 @@
 @{
     Layout = "_Layout";
 }
-<div class="jumbotron-fluid" id="listArea">
-    <h1>Customer List</h1>
-    <div class="row ml-3 mb-1">
-        <button type="button" id="createButton" class="btn btn-outline-primary py-1" data-toggle="modal" data-target="#createModal">Create</button>
-    </div>
-    <form asp-action="Index" method="get">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text py-1">Find by name</span>
-            </div>
-            <input class="pr-2 mr-2" type="text" name="search" value="@ViewData["searchData"]" />
-            <a asp-action="Index" class="font-weight-bold btn btn-outline-info">Back to List</a>
+<div class="container" id="listArea">
+    <div class="jumbotron-fluid">
+        <partial name="Common/_SuccessMessage" />
+        <partial name="Common/_ErrorMessage" />
+        <h1>Customer List</h1>
+        <div class="row ml-3 mb-1">
+            <button type="button" id="createButton" class="btn btn-outline-primary py-1" data-toggle="modal" data-target="#createModal">Create</button>
         </div>
-    </form>
-    <partial name="Customer/_CustomerList" model="Model" />
+        <form asp-action="Index" method="get">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text py-1">Find by name</span>
+                </div>
+                <input class="pr-2 mr-2" type="text" name="search" value="@ViewData["searchData"]" />
+                <a asp-action="Index" class="font-weight-bold btn btn-outline-info">Back to List</a>
+            </div>
+        </form>
+        <partial name="Customer/_CustomerList" model="Model" />
+    </div>
+    <script src="JS/App.js"></script>
+    <script src="JS/Edit.js"></script>
 </div>
 <div class="modal fade" id="createModal">
     <div class="modal-dialog modal-dialog-centered">
@@ -32,4 +38,3 @@
         </div>
     </div>
 </div>
-<script src="JS/App.js"></script>

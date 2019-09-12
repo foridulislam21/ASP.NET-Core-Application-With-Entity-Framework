@@ -19,8 +19,8 @@
                     <td>@customer.Address</td>
                     <td>@customer.LoyaltyPoint</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@customer.Id" class="btn btn-info btn-sm"><i class="fas fa-edit"></i>Edit</a>
-                        <a asp-route-id="@customer.Id" class="btn btn-danger btn-sm"><i class="fas fa-recycle"></i>Delete</a>
+                        <button class="btn btn-info btn-sm editButton" data-id="@customer.Id"><i class="fas fa-edit"></i>Edit</button>
+                        <button class="btn btn-danger btn-sm deleteButton" data-id="@customer.Id"><i class="fas fa-recycle"></i>Delete</button>
                     </td>
                 </tr>
             }

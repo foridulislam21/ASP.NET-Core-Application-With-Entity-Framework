@@ -20,16 +20,21 @@
     </form>
     <script>
         //post customer data
-        $("#saveButton").click(function (event) {
+        $("#saveButton").click(function () {
             var res = validate();
             if (res === false) {
                 return false;
             }
             $.ajax({
-                    url: "/Customer/Create",
-                    method: "POST",
-                    data: $("#createForm").serialize()
-                })
+                url: "/Customer/Create",
+                method: "POST",
+                data: $("#createForm").serialize(),
+                success: function (successMessage) {
+                    alert("Save Successfully");
+                    $("#createModal").modal("hide");
+                }
+
+            })
                 .done(function (response) {
                     debugger;
                     $("#listArea").html(response);

@@ -10,7 +10,6 @@ namespace Ecommerce.Models
         public string Name { get; set; }
 
         [Required]
-        [MinLength(4, ErrorMessage = "Please provide minimum length 4")]
         public string Address { get; set; }
 
         [Range(0, 1000)]

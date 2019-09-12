@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 using Ecommerce.Models;
 using Ecommerce.Repositories;
 using Ecommerce.WebApp.Models.Customer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
+using Newtonsoft.Json;
 
 namespace Ecommerce.WebApp.Controllers
 {
@@ -26,10 +29,12 @@ namespace Ecommerce.WebApp.Controllers
             if (!string.IsNullOrEmpty(search))
             {
                 var searchCustomer = _customerRepository.GetByName(search);
-                return View(searchCustomer);
+                return PartialView(searchCustomer);
             }
-            return PartialView(customers);
+            return View(customers);
         }
+
+        public bool JsonArrayAttribute { get; set; }
 
         [HttpGet]
         public IActionResult Create()
@@ -48,6 +53,7 @@ namespace Ecommerce.WebApp.Controllers
             {
                 var customer = new Customer()
                 {
+                    Id = model.Id,
                     Name = model.Name,
                     Address = model.Address,
                     LoyaltyPoint = model.LoyaltyPoint
@@ -64,7 +70,7 @@ namespace Ecommerce.WebApp.Controllers
             }
 
             model.CustomerList = _customerRepository.GetAll();
-            return RedirectToAction("Index", model);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Edit(int? id)
@@ -78,16 +84,23 @@ namespace Ecommerce.WebApp.Controllers
             {
                 return NotFound();
             }
-            return View(customersById);
+            return PartialView(customersById);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, Customer customer)
+        public IActionResult Edit(int id, CustomerCreateViewModel model)
         {
-            if (id != customer.Id)
+            if (id != model.Id)
             {
                 return NotFound();
             }
+            var customer = new Customer()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Address = model.Address,
+                LoyaltyPoint = model.LoyaltyPoint
+            };
 
             if (ModelState.IsValid)
             {
@@ -95,25 +108,11 @@ namespace Ecommerce.WebApp.Controllers
                 if (isUpdate)
                 {
                     ViewBag.UpdateMessage = "Update SuccessFully!";
-                    return View();
+                    return RedirectToAction("Index");
                 }
             }
-            return View();
-        }
 
-        public IActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var customerId = _customerRepository.GetById(id);
-            if (customerId == null)
-            {
-                return NotFound();
-            }
-            return View(customerId);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -129,11 +128,11 @@ namespace Ecommerce.WebApp.Controllers
                 if (isRemove)
                 {
                     ViewBag.Deleted = "Customer data remove successfully!";
-                    return View();
+                    return RedirectToAction("Index");
                 }
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

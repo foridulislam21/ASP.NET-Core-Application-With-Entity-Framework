@@ -9,8 +9,10 @@ namespace Ecommerce.WebApp.Models.Customer
 {
     public class CustomerCreateViewModel
     {
+        public int Id { get; set; }
+
         [Required]
-        [MaxLength(10)]
+        [MaxLength(20)]
         [MinLength(3)]
         public string Name { get; set; }
 
