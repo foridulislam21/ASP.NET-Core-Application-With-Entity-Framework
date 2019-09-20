@@ -5,8 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ecommerce.Abstraction\Ecommerce.Abstraction.csproj" />
-    <ProjectReference Include="..\Ecommerce.DatabaseContext\Ecommerce.DatabaseContext.csproj" />
     <ProjectReference Include="..\EcommerceApp.Models\Ecommerce.Models.csproj" />
   </ItemGroup>
 

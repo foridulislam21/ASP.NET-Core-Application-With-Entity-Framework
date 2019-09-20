@@ -23,22 +23,6 @@
     </div>
     <script src="JS/App.js"></script>
     <script src="JS/Edit.js"></script>
-    <script>
-    $(".deleteButton").click(function () {
-            var result = confirm("Are you sure!");
-            if (result === true) {
-                $.ajax({
-                    url: "Customer/Delete",
-                    method: "POST",
-                    data: {
-                        id: $(this).attr("data-id")
-                    }
-                }).done(function (response) {
-                    $("#listArea").html(response);
-                });
-            }
-        });
-    </script>
 </div>
 <div class="modal fade" id="createModal">
     <div class="modal-dialog modal-dialog-centered">

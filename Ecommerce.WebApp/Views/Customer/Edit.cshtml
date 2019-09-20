@@ -27,11 +27,14 @@
                 $.ajax({
                     url: "/Customer/Edit",
                     method: "POST",
-                    data: $("#editForm").serialize()
-                }).done(function (response) {
-                    debugger;
-                    $("#createModal").modal("hide");
-                    $("#listArea").html(response);
+                    data: $("#editForm").serialize(),
+                    success: function () {
+                        alert("Update Data Successfully");
+                        $("#createModal").modal("hide");
+                        location.reload();
+
+                    }
+
                 });
             });
         </script>

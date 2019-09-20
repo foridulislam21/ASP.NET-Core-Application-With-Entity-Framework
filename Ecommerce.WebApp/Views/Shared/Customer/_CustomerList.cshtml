@@ -26,6 +26,25 @@
             }
         </tbody>
     </table>
-    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script>
+        $(".deleteButton").click(function () {
+            var result = confirm("Are you sure!");
+            debugger;
+            if (result === true) {
+                $.ajax({
+                    url: "Customer/Delete",
+                    method: "post",
+                    data: {
+                        id: $(this).attr("data-id")
+                    }
+                }).done(function () {
+                    location.reload();
+                });
+            }
+        });
+    </script>
+    @section Scripts
+    {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 </div>

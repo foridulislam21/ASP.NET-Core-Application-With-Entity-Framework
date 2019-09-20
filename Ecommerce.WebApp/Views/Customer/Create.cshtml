@@ -31,16 +31,10 @@
                 data: $("#createForm").serialize(),
                 success: function (successMessage) {
                     alert("Save Successfully");
+                    location.reload();
                     $("#createModal").modal("hide");
                 }
-
-            })
-                .done(function (response) {
-                    debugger;
-                    $("#listArea").html(response);
-                }).fail(function () {
-                    alert("Request Failed");
-                });
+            });
         });
     </script>
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>

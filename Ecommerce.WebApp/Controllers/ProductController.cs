@@ -6,6 +6,7 @@ using Ecommerce.Models;
 using Ecommerce.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Ecommerce.DatabaseContext;
+using Ecommerce.WebApp.Models.Product;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,22 +17,26 @@ namespace Ecommerce.WebApp.Controllers
         private ProductRepository _productRepository;
         private CategoryRepository _categoryRepository;
 
-        public ProductController()
+        public ProductController(ProductRepository productRepository, CategoryRepository categoryRepository)
         {
-            _productRepository = new ProductRepository();
-            _categoryRepository = new CategoryRepository();
+            _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public IActionResult Index()
         {
-            var products = _productRepository.GetAll();
-            return View(products);
+            var product = _productRepository.GetAll();
+            return View(product);
         }
 
         public IActionResult Create()
         {
+            var model = new ProductViewModel
+            {
+                ProductList = _productRepository.GetAll() as List<Product>
+            };
             PopulateCategoryList();
-            return View();
+            return View(model);
         }
 
         private void PopulateCategoryList(object selectedCategory = null)
@@ -42,16 +47,25 @@ namespace Ecommerce.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Product model)
+        public IActionResult Create(ProductViewModel model)
         {
+            var products = new Product()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Price = model.Price,
+                ExpireDate = model.ExpireDate,
+                IsActive = model.IsActive,
+                Category = model.Category,
+                CategoryId = model.CategoryId
+            };
             if (ModelState.IsValid)
             {
-                bool isAdded = _productRepository.Add(model);
+                bool isAdded = _productRepository.Add(products);
                 if (isAdded)
                 {
-                    var product = _productRepository.GetAll();
                     ViewBag.SuccessMessage = "Save SuccessFully";
-                    return View("Index", product);
+                    return View();
                 }
             }
             PopulateCategoryList(model.CategoryId);

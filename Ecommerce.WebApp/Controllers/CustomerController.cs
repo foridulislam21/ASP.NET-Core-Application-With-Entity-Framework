@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ecommerce.Abstraction.BLL;
+using Ecommerce.Abstraction.Repositories;
 using Ecommerce.Models;
 using Ecommerce.Repositories;
 using Ecommerce.WebApp.Models.Customer;
@@ -14,21 +16,21 @@ namespace Ecommerce.WebApp.Controllers
 {
     public class CustomerController : Controller
     {
-        private CustomerRepository _customerRepository;
+        private ICustomerManager _customerManager;
 
-        public CustomerController()
+        public CustomerController(ICustomerManager customerManager)
         {
-            _customerRepository = new CustomerRepository();
+            _customerManager = customerManager;
         }
 
         public IActionResult Index(string search)
         {
-            var customers = _customerRepository.GetAll();
+            var customers = _customerManager.GetAll();
             ViewData["searchData"] = search;
 
             if (!string.IsNullOrEmpty(search))
             {
-                var searchCustomer = _customerRepository.GetByName(search);
+                var searchCustomer = _customerManager.GetByName(search);
                 return PartialView(searchCustomer);
             }
             return View(customers);
@@ -41,7 +43,7 @@ namespace Ecommerce.WebApp.Controllers
         {
             var model = new CustomerCreateViewModel
             {
-                CustomerList = _customerRepository.GetAll()
+                CustomerList = _customerManager.GetAll()
             };
             return PartialView(model);
         }
@@ -58,7 +60,7 @@ namespace Ecommerce.WebApp.Controllers
                     Address = model.Address,
                     LoyaltyPoint = model.LoyaltyPoint
                 };
-                bool isAdded = _customerRepository.Add(customer);
+                bool isAdded = _customerManager.Add(customer);
                 if (isAdded)
                 {
                     ViewBag.SuccessMessage = "Saved Successfully";
@@ -69,17 +71,17 @@ namespace Ecommerce.WebApp.Controllers
                 }
             }
 
-            model.CustomerList = _customerRepository.GetAll();
+            model.CustomerList = _customerManager.GetAll();
             return RedirectToAction("Index");
         }
 
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var customersById = _customerRepository.GetById(id);
+            var customersById = _customerManager.GetById(id);
             if (customersById == null)
             {
                 return NotFound();
@@ -104,7 +106,7 @@ namespace Ecommerce.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                bool isUpdate = _customerRepository.Update(customer);
+                bool isUpdate = _customerManager.Update(customer);
                 if (isUpdate)
                 {
                     ViewBag.UpdateMessage = "Update SuccessFully!";
@@ -118,18 +120,18 @@ namespace Ecommerce.WebApp.Controllers
         [HttpPost]
         public IActionResult Delete(int id, Customer customer)
         {
+            var customers = _customerManager.GetAll();
             if (id != customer.Id)
             {
                 return NotFound();
             }
-            bool isRemove = _customerRepository.Remove(customer);
+            bool isRemove = _customerManager.Remove(customer);
             if (isRemove)
             {
-                ViewBag.Deleted = "Customer data remove successfully!";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", customers);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", customers);
         }
     }
 }

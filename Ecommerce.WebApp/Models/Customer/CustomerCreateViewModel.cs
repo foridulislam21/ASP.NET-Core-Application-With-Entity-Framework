@@ -24,6 +24,6 @@ namespace Ecommerce.WebApp.Models.Customer
         public int LoyaltyPoint { get; set; }
 
         [NotMapped]
-        public List<Ecommerce.Models.Customer> CustomerList { get; set; }
+        public ICollection<Ecommerce.Models.Customer> CustomerList { get; set; }
     }
 }
